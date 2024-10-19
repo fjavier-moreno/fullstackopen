@@ -1,10 +1,11 @@
+/* eslint-disable react/prop-types */
 const Header = (course) => {
   return (
     <h1>{course.name}</h1>
   )
 }
 
-const Part = ({part, exercise}) => {
+const Part = ({ part, exercise }) => {
   return (
     <p>
       {part} {exercise}
@@ -12,39 +13,50 @@ const Part = ({part, exercise}) => {
   )
 }
 
-const Content = ({ parts, exercises }) => {
+const Content = ({ parts }) => {
   return (
     <>
-      <Part part={parts[0]} exercise={exercises[0]} />
-      <Part part={parts[1]} exercise={exercises[1]} />
-      <Part part={parts[2]} exercise={exercises[2]} />
+      {
+        parts.map((part, index) => (
+          <Part key={index} part={part.name} exercise={part.exercises} />
+        ))
+      }
     </>
   )
 }
 
-const Total = (exercises) => {
+const Total = ({ parts }) => {
+  let total = 0;
+  
+  parts.map((part) => (
+    total += part.exercises
+  ))
+
   return (
-    <p>Number of exercises {exercises.sum}</p>
+    <p>Number of exercises {total}</p>
   )
 }
 
 const App = () => {
   const course = 'Half Stack application development'
-  const part1 = 'Fundamentals of React'
-  const exercises1 = 10
-  const part2 = 'Using props to pass data'
-  const exercises2 = 7
-  const part3 = 'State of a component'
-  const exercises3 = 14
+  const part1 = {
+    name: 'Fundamentals of React',
+    exercises: 10
+  }
+  const part2 = {
+    name: 'Using props to pass data',
+    exercises: 7
+  }
+  const part3 = {
+    name: 'State of a component',
+    exercises: 14
+  }
 
   return (
     <div>
-      <Header name={course}/>
-      <Content 
-        parts={[part1, part2, part3]}
-        exercises={[exercises1, exercises2, exercises3]}
-      />
-      <Total sum={exercises1 + exercises2 + exercises3} />
+      <Header name={course} />
+      <Content parts={[part1, part2, part3]} />
+      <Total parts={[part1, part2, part3]} />
     </div>
   )
 }
