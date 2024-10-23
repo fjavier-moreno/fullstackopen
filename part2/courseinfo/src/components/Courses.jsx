@@ -5,6 +5,7 @@ const Courses = ({ courses }) => {
 	
 	return (
 		<>
+		<h1>Web development curriculum</h1>
 			{courses.map(course => (
 				<div key={course.id}>
 					<h2>{course.name}</h2>
