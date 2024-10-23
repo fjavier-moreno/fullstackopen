@@ -1,5 +1,7 @@
 import { useState } from 'react'
 
+import Filter from './components/Filter'
+import NewContactForm from './components/NewContactForm'
 import Contacts from './components/Contacts'
 
 const App = () => {
@@ -15,7 +17,7 @@ const App = () => {
 
   const handleContactSearch = (event) => {
     const searchTerm = event.target.value.toLowerCase()
-  
+
     if (searchTerm.length > 0) {
       setFilter(persons.filter((person) => person.name.toLowerCase().includes(searchTerm)))
     } else {
@@ -37,7 +39,7 @@ const App = () => {
     if (persons.find((person) => person.name === newName)) {
       alert(`${newName} is alrady added to phonebook`)
     } else {
-      const contactObject = { name: newName, number: newnumber, id: newName}
+      const contactObject = { name: newName, number: newnumber, id: newName }
       setPersons(persons.concat(contactObject))
       setFilter(persons.concat(contactObject))
     }
@@ -46,19 +48,13 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
-      <p>filter shown with <input onChange={handleContactSearch} /></p>
+      <Filter handler={handleContactSearch} />
       <h2>Add a new</h2>
-      <form onSubmit={addContact}>
-        <div>
-          name: <input onChange={handleContactChange} />
-        </div>
-        <div>
-          number: <input onChange={handleNumberChange} />
-        </div>
-        <div>
-          <button type="submit">add</button>
-        </div>
-      </form>
+      <NewContactForm
+        onSubmit={addContact}
+        handleContact={handleContactChange}
+        handleNumber={handleNumberChange}
+      />
       <h2>Numbers</h2>
       <Contacts persons={filter} />
     </div>
