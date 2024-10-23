@@ -1,8 +1,6 @@
 const TotalExercises = ({ parts }) => {
 
-	let total = parts.reduce((sum,part)=> {
-		return sum + part.exercises
-	}, 0)
+	let total = parts.reduce((sum, part) => sum + part.exercises, 0)
 
 	return (
 		<>
