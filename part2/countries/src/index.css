@@ -1,0 +1,11 @@
+.error {
+  background: lightgrey;
+  font-size: 20px;
+  border-style: solid;
+  border-width: 2px;
+  border-radius: 10px;
+  border-color: red;
+  padding: 5px;
+  margin: 10px;
+  max-width: fit-content;
+}
