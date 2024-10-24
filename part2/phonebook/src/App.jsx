@@ -4,12 +4,14 @@ import Filter from './components/Filter'
 import NewContactForm from './components/NewContactForm'
 import Contacts from './components/Contacts'
 import noteService from './services/contacts'
+import Notification from './components/Notification'
 
 const App = () => {
   const [persons, setPersons] = useState([])
   const [newName, setNewName] = useState('')
   const [filter, setFilter] = useState([...persons])
   const [newnumber, setNewNumber] = useState('')
+  const [message, setMessage] = useState(null)
 
   useEffect(() => {
     noteService
@@ -17,6 +19,12 @@ const App = () => {
       .then(personsList => {
         setPersons(personsList)
         setFilter(personsList)
+      })
+      .catch(() => {
+        setMessage(`There was an error loading contacts`)
+        setTimeout(() => {
+          setMessage(null)
+        }, 5000)
       })
   }, [])
 
@@ -45,7 +53,13 @@ const App = () => {
         .then(personDeleted => {
           setPersons(persons.filter((person) => person.id !== personDeleted.id))
           setFilter(persons.filter((person) => person.id !== personDeleted.id))
-          alert(`${personDeleted.name} was deleted`)
+          setMessage(`Contact ${newName} deleted!`)
+        })
+        .catch(() => {
+          setMessage(`There was an error deleting ${newName} contact`)
+          setTimeout(() => {
+            setMessage(null)
+          }, 5000)
         })
     }
   }
@@ -63,7 +77,14 @@ const App = () => {
           .then(returnedContact => {
             setPersons(persons.map(p => p.name !== newName ? p : returnedContact))
             setFilter(persons.map(p => p.name !== newName ? p : returnedContact))
+            setMessage(`Contact ${newName} updated!`)
           })
+          .catch(() => {
+            setMessage(`There was an error updating ${newName} contact`)
+          })
+        setTimeout(() => {
+          setMessage(null)
+        }, 5000)
       }
     } else {
       const contactObject = { name: newName, number: newnumber, id: (persons.length + 1).toString() }
@@ -72,13 +93,21 @@ const App = () => {
         .then(returnedPerson => {
           setPersons(persons.concat(returnedPerson))
           setFilter(persons.concat(returnedPerson))
+          setMessage(`Contact ${newName} created!`)
         })
+        .catch(() => {
+          setMessage(`There was an error creating ${newName} contact`)
+        })
+        setTimeout(() => {
+          setMessage(null)
+        }, 5000)
     }
   }
 
   return (
     <div>
       <h2>Phonebook</h2>
+      <Notification message={message} />
       <Filter handler={handleContactSearch} />
       <h2>Add a new</h2>
       <NewContactForm
