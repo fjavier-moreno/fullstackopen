@@ -56,10 +56,12 @@ const App = () => {
           setMessage(`Contact ${newName} deleted!`)
         })
         .catch(() => {
-          setMessage(`There was an error deleting ${newName} contact`)
+          setMessage(`There was an error deleting ${newName}, has already removed from server`)
           setTimeout(() => {
             setMessage(null)
           }, 5000)
+          setPersons(person.filter(p => p.name !== newName))
+          setFilter(person.filter(p => p.name !== newName))
         })
     }
   }
@@ -80,7 +82,9 @@ const App = () => {
             setMessage(`Contact ${newName} updated!`)
           })
           .catch(() => {
-            setMessage(`There was an error updating ${newName} contact`)
+            setMessage(`There was an error updating ${newName}, has already removed from server`)
+            setPersons(persons.filter(p => p.name !== newName))
+            setFilter(persons.filter(p => p.name !== newName))
           })
         setTimeout(() => {
           setMessage(null)
@@ -98,9 +102,9 @@ const App = () => {
         .catch(() => {
           setMessage(`There was an error creating ${newName} contact`)
         })
-        setTimeout(() => {
-          setMessage(null)
-        }, 5000)
+      setTimeout(() => {
+        setMessage(null)
+      }, 5000)
     }
   }
 
