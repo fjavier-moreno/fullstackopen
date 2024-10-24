@@ -1,22 +1,25 @@
 import Country from './Country'
 import CountryList from './CountryList'
 
-const SearchResults = ({ countries }) => {
+const SearchResults = ({ countries, handleCountryView, selectedCountry }) => {
 
 	const elements = countries.length
 
-	if (elements > 10 && elements !== 0) {
+	if (selectedCountry !== null) {
+		return (
+			<Country country={selectedCountry} />
+		)
+	} else if (elements > 10 && elements !== 0) {
 		return (
 			<p>Too many results, specify another filter</p>
 		)
 	} else if (elements <= 10 && elements >= 2) {
 		return (
-			<CountryList countries={countries} />
+			<CountryList countries={countries} handleCountryView={handleCountryView} />
 		)
 	} else if (elements === 1) {
-		const country = countries[0]
 		return (
-			<Country country={country} />
+			<Country country={countries[0]} />
 		)
 	} else {
 		return null

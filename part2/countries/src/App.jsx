@@ -8,6 +8,7 @@ const App = () => {
   const [countries, setCountries] = useState([])
   const [result, setResult] = useState([])
   const [errorMessage, setErrorMessage] = useState(null)
+  const [selectedCountry, setSelectedCountry] = useState(null)
 
   useEffect(() => {
     searchService
@@ -26,21 +27,30 @@ const App = () => {
 
   const handleSearch = (event) => {
     const value = event.target.value
+    setSelectedCountry(null)
 
-    if (value.length === 0){
+    if (value.length === 0) {
       setResult([])
+      setSelectedCountry(null)
     } else {
       const filtered = countries.filter(c => c.name.official.toLowerCase().includes(value))
       setResult(filtered)
     }
   }
 
+  const handleCountryView = (country) => {
+    setSelectedCountry(country)
+  }
 
   return (
     <div>
       <div>Find countries <Search handler={handleSearch} /> </div>
       <Notification message={errorMessage} />
-      <SearchResults countries={result} />
+      <SearchResults
+        countries={result}
+        handleCountryView={handleCountryView}
+        selectedCountry={selectedCountry}
+      />
     </div>
   )
 }
