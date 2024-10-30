@@ -1,0 +1,33 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fjavier-moreno/fullstackopen.git"
+  },
+  "keywords": [
+    "node",
+    "backend",
+    "fullstack"
+  ],
+  "author": "Francisco Moreno",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/fjavier-moreno/fullstackopen/issues"
+  },
+  "homepage": "https://github.com/fjavier-moreno/fullstackopen#readme",
+  "description": "",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.21.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.7"
+  }
+}
